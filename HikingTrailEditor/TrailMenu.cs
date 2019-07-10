@@ -53,14 +53,18 @@ namespace HikingTrailEditor
                     {
                         case 1:
                             GetAll();
+                            Console.WriteLine(" Press [enter] to return to the menu.");
+                            Console.ReadLine();
                             break;
                         case 2:
                             Add();
                             break;
                         case 3:
+                            GetAll();
                             Edit();
                             break;
                         case 4:
+                            GetAll();
                             Delete();
                             break;
                         case 5:
@@ -91,8 +95,7 @@ namespace HikingTrailEditor
             //get the list of trails from TrailService
             _trailList = _trailService.GetAll();
 
-            //create a ConsoleTable object for displaying
-            //output like a table
+            //create a ConsoleTable object to display the list of trails
             ConsoleTable ct = new ConsoleTable(90);
 
             Console.Clear();
@@ -120,27 +123,24 @@ namespace HikingTrailEditor
             ct.PrintLine();
 
             Console.WriteLine();
-            Console.WriteLine(" Press [enter] to return to the menu.");
-            Console.ReadLine();
+            
 
         }
 
         private static void Add()
         {
-            //get the existing list of all trails
+            //get the list of trails from TrailService
             _trailList = _trailService.GetAll();
 
             //instantiate the new trail object
             Trail trail = new Trail();
 
-            //prompt the user for the name of the trail
+            //prompt the user for the name of the trail and save the result as TrailName
             Console.Write("Trail Name: ");
-            //read the input from the console as the trail name
             trail.TrailName = Console.ReadLine();
 
-            //prompt the user for the trail location
+            //prompt the user for the trail location and save the result as TrailLocation
             Console.Write("Trail Location: ");
-            //read the input from the console as the trail location
             trail.TrailLocation = Console.ReadLine();
 
             //prompt the user for the trail length
@@ -152,12 +152,12 @@ namespace HikingTrailEditor
             do
             {
                 success = int.TryParse(Console.ReadLine(), out length);
-                //if trail length > 0, read the input as the trail location
+                //if trail length > 0, save the result as TrailLength
                 if (success && length > 0)
                 {
                     trail.TrailLength = length;
                 }
-                //if trail length is an invalid number prompt the user for another input
+                //if trail length input is an invalid number prompt the user for another input
                 else
                 {
                     Console.WriteLine("You did not enter a correct value for length");
@@ -165,21 +165,18 @@ namespace HikingTrailEditor
                 }
             } while (success == false || length <= 0);
 
-            //prompt the user for the trail summary
+            //prompt the user for the trail summary and save the result as TrailSummary
             Console.Write("Trail Summary: ");
-            //read the input from the console as the trail summary
             trail.TrailSummary = Console.ReadLine();
-
 
             //get the current date and time for DateAdded
             trail.DateAdded = DateTime.Now;
 
-            //call the player service and add the player
+            //add the trail using the trail service
             trail = _trailService.Add(trail, _trailList);
 
-            //give the user feed back--pause for one second on screen
             Console.WriteLine($"Success: Added a new trail ID: {trail.Trail_Id}");
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(2000);
         }
 
         private static void Edit()
@@ -192,14 +189,12 @@ namespace HikingTrailEditor
             _trailList = _trailService.GetAll();
             Trail trailToEdit = _trailList.Find(s => s.Trail_Id == trailEditId);
 
-            //prompt the user for the name of the edited trail
+            //prompt the user for the name of the edited trail and save the result as newName
             Console.Write("Trail Name: ");
-            //read the input from the console as the edited trail name
             string newName = Console.ReadLine();
 
-            //prompt the user for the trail location
+            //prompt the user for the trail location and save the result as newLocation
             Console.Write("Trail Location: ");
-            //read the input from the console as the trail location
             string newLocation = Console.ReadLine();
 
             //prompt the user for the trail length
@@ -212,7 +207,7 @@ namespace HikingTrailEditor
             do
             {
                 success = int.TryParse(Console.ReadLine(), out length);
-                //if trail length > 0, read the input as the trail location
+                //if trail length > 0, save the result as newLength
                 if (success && length > 0)
                 {
                     newLength = length;
@@ -225,27 +220,24 @@ namespace HikingTrailEditor
                 }
             } while (success == false || length <= 0);
 
-            //prompt the user for the trail summary
+            //prompt the user for the trail summary and save the result as newSummary
             Console.Write("Trail Summary: ");
-            //read the input from the console as the trail summary
             string newSummary = Console.ReadLine();
 
-            //make sure a trail with the specified id exists
-            //before attempting to edit it
+            //make sure a trail with the specified id exists before attempting to edit it
             if (trailToEdit != null)
             {
                 //edit the trail
                 _trailService.Edit(trailToEdit, _trailList, newName, newLocation, newLength, newSummary);
 
-                //give feedback to the user and pause for one second
                 Console.Write($"Trail ID: {trailEditId} was edited.");
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(2000);
             }
             else
             {
-                //could not find the specified player show and error and pause for a second
+                //if a trail with that id doesn't exist show an error
                 Console.Write($"ERROR: Could not find trail with ID: {trailEditId}.");
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(2000);
             }
         }
 
@@ -259,22 +251,20 @@ namespace HikingTrailEditor
             _trailList = _trailService.GetAll();
             var trailToRemove = _trailList.SingleOrDefault(s => s.Trail_Id == trailId);
 
-            //make sure a trail with the specified id exists
-            //before attempting to delete it
+            //make sure a trail with the specified id exists before attempting to delete it
             if (trailToRemove != null)
             {
                 //delete the player
                 _trailService.Delete(trailToRemove, _trailList);
 
-                //give feedback to the user and pause for one second
                 Console.Write($"Trail ID: {trailId} was deleted.");
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(2000);
             }
             else
             {
-                //could not find the specified player show and error and pause for a second
+                //if a trail with that id doesn't exist show an error
                 Console.Write($"ERROR: Could not find trail with ID: {trailId}.");
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(2000);
             }
         }
     }
