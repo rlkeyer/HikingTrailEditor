@@ -32,7 +32,7 @@ namespace HikingTrailEditor
             Console.WriteLine(" 4. Delete Trail");
             Console.WriteLine(" 5. Exit");
             Console.WriteLine();
-            Console.Write("Choice: ");
+            Console.Write("Select: ");
 
             var result = Console.ReadLine();
             
@@ -57,6 +57,7 @@ namespace HikingTrailEditor
                             Console.ReadLine();
                             break;
                         case 2:
+                            GetAll();
                             Add();
                             break;
                         case 3:
@@ -103,7 +104,7 @@ namespace HikingTrailEditor
             Console.WriteLine("Trails");
             ct.PrintLine();
 
-            string[] headers = new[] { "Id", "Name", "Location", "Length", "Summary" };
+            string[] headers = new[] { "Id", "Name", "Location", "Length (mi)", "Summary" };
             ct.PrintRow(headers);
             ct.PrintLine();
 

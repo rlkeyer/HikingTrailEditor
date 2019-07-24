@@ -16,7 +16,7 @@ namespace HikingTrailEditor
         public void PrintLine()
         {
             Console.Write(" ");
-            Console.WriteLine(new string('-', 165));
+            Console.WriteLine(new string('-', 168));
         }
 
         public void PrintRow(params string[] columns)
@@ -41,7 +41,7 @@ namespace HikingTrailEditor
                         width = 25;
                         break;
                     case 3:
-                        width = 10;
+                        width = 13;
                         break;
                     case 4:
                         width = 75;
