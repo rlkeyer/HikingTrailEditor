@@ -29,6 +29,7 @@ namespace HikingTrailEditor
                 string column = columns[i];
                 int width = 0;
 
+                //use a switch statement to set the width of the columns in the table
                 switch (i)
                 {
                     case 0:
