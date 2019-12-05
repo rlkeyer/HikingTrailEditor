@@ -77,19 +77,19 @@ namespace HikingTrailEditor
 
         public Trail Add(Trail trail, List<Trail> trails)
         {
-            //get the next player id
+            //get the next trail id
             int newTrailId = GetNextId(trails);
 
-            //assign the playe an id
+            //assign the trail an id
             trail.Trail_Id = newTrailId;
 
-            //add the player to the list
+            //add the trail to the list
             trails.Add(trail);
 
             //save the list
             Save(trails);
 
-            //return the player with the new ID
+            //return the trail with the new ID
             return trail;
         }
 
